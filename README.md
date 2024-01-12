@@ -1,1 +1,1 @@
-# spotify-clone
+# Project Spotify Clone
