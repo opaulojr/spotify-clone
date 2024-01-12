@@ -26,13 +26,24 @@ function Library() {
           gap-x-2
           "
         >
-          <TbPlaylist className="text-neutral-400" size={26} />
+          <TbPlaylist
+            size={26}
+            className="
+            text-neutral-400
+            hover:text-white
+            cursor-pointer
+            transition
+            "
+          />
 
           <p
             className="
             text-neutral-400
-            font-medium
+            hover:text-white
+            font-semibold
             text-md
+            cursor-pointer
+            transition
             "
           >
             Your Library
@@ -51,13 +62,14 @@ function Library() {
         />
       </div>
 
-      <div className="
-      flex
-      flex-col
-      gap-y-2
-      mt-4
-      px-4
-      "
+      <div
+        className="
+        flex
+        flex-col
+        gap-y-2
+        mt-4
+        px-4
+        "
       >
         List of Songs!
       </div>
