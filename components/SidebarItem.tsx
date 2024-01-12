@@ -20,12 +20,13 @@ function SidebarItem({
       className={twMerge(`
       flex
       flex-row
-      h-auto
       items-center
+      justify-center
+      h-[40px]
       w-full
       gap-x-4
       text-md
-      font-medium
+      font-semibold
       cursor-pointer
       hover:text-white
       transition
