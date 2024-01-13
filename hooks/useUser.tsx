@@ -3,7 +3,8 @@ import {
   useEffect, useState, createContext, useContext, useMemo,
 } from 'react';
 import { useSessionContext, useUser as useSupaUser } from '@supabase/auth-helpers-react';
-import { Subscription, UserDetails } from '../types';
+
+import { Subscription, UserDetails } from '@/types';
 
 type UserContextType = {
   accessToken: string | null;

@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import Header from '../../components/Header';
+
+import Header from '@/components/Header';
 
 export const revalidate = 0;
 
