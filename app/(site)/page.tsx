@@ -1,6 +1,7 @@
 import getSongs from '@/actions/getSongs';
 import Header from '@/components/Header';
 import ListButton from '@/components/ListButton';
+import PageContent from './components/PageContent';
 
 export const revalidate = 0;
 
@@ -50,11 +51,7 @@ export default async function Home() {
         </h1>
 
         <div>
-          {songs.map((song) => (
-            <div>
-              {song.title}
-            </div>
-          ))}
+          <PageContent songs={songs} />
         </div>
       </div>
     </div>
