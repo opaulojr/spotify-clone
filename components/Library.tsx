@@ -2,10 +2,26 @@
 
 import { TbPlaylist } from 'react-icons/tb';
 import { AiOutlinePlus } from 'react-icons/ai';
+import toast from 'react-hot-toast';
+
+import useAuthModal from '@/hooks/useAuthModal';
+import useUploadModal from '@/hooks/useUploadModal';
+import { useUser } from '@/hooks/useUser';
 
 function Library() {
+  const authModal = useAuthModal();
+  const uploadModal = useUploadModal();
+  const { user } = useUser();
+
   const onClick = () => {
-    // handle upload later
+    if (!user) {
+      toast.error('You need log in');
+      return authModal.onOpen();
+    }
+
+    // Check for subscription
+
+    return uploadModal.onOpen();
   };
 
   return (
