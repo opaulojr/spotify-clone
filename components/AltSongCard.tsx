@@ -5,11 +5,11 @@ import Image from 'next/image';
 import { Song } from '@/types';
 import useLoadImage from '@/hooks/useLoadImage';
 
-type SearchSongCardProps = {
+type AltSongCardProps = {
   song: Song;
 };
 
-function SearchSongCard({ song }: SearchSongCardProps) {
+function AltSongCard({ song }: AltSongCardProps) {
   const imageUrl = useLoadImage(song);
 
   return (
@@ -67,4 +67,4 @@ function SearchSongCard({ song }: SearchSongCardProps) {
   );
 }
 
-export default SearchSongCard;
+export default AltSongCard;

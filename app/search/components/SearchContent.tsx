@@ -1,8 +1,8 @@
 'use client';
 
 import { Song } from '@/types';
-import SearchSongCard from '@/components/SearchSongCard';
 import LikeButton from '@/components/LikeButton';
+import AltSongCard from '@/components/AltSongCard';
 
 type SearchContentProps = {
   songs: Song[];
@@ -34,7 +34,7 @@ function SearchContent({ songs }: SearchContentProps) {
           className="flex items-center gap-x-4 w-full"
         >
           <div className="flex-1 w-full">
-            <SearchSongCard song={song} />
+            <AltSongCard song={song} />
           </div>
 
           <LikeButton songId={song.id} />

@@ -1,11 +1,13 @@
 import Image from 'next/image';
 
 import Header from '@/components/Header';
+import getLikedSongs from '@/actions/getLikedSongs';
+import LikedContent from './components/LikedContent';
 
 export const revalidate = 0;
 
 export default async function Liked() {
-  // Fetch liked songs
+  const songs = await getLikedSongs();
 
   return (
     <div
@@ -82,7 +84,7 @@ export default async function Liked() {
         </div>
       </Header>
 
-      Render liked songs
+      <LikedContent songs={songs} />
     </div>
   );
 }
