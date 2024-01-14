@@ -1,14 +1,10 @@
 import Image from 'next/image';
 
 import Header from '@/components/Header';
-import getLikedSongs from '@/actions/getLikedSongs';
-import LikedContent from './components/LikedContent';
 
 export const revalidate = 0;
 
-export default async function Liked() {
-  const songs = await getLikedSongs();
-
+export default async function Uploaded() {
   return (
     <div
       className="
@@ -20,7 +16,7 @@ export default async function Liked() {
       overflow-y-auto
       "
     >
-      <Header className="from-blue-800">
+      <Header className="from-rose-800">
         <div className="mt-20">
           <div
             className="
@@ -41,7 +37,7 @@ export default async function Liked() {
               "
             >
               <Image
-                src="/images/liked.png"
+                src="/images/upload.png"
                 fill
                 alt="Playlist"
                 className="object-cover"
@@ -77,14 +73,14 @@ export default async function Liked() {
                 font-bold
                 "
               >
-                Liked Songs
+                Songs Sent
               </h1>
             </div>
           </div>
         </div>
       </Header>
 
-      <LikedContent songs={songs} />
+      Uploaded content
     </div>
   );
 }

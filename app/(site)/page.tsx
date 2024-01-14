@@ -41,6 +41,12 @@ export default async function Home() {
               name="Liked Songs"
               href="liked"
             />
+
+            <ListButton
+              image="/images/upload.png"
+              name="Songs Sent"
+              href="sent"
+            />
           </div>
         </div>
       </Header>
