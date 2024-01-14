@@ -2,6 +2,7 @@
 
 import { Song } from '@/types';
 import SearchSongCard from '@/components/SearchSongCard';
+import LikeButton from '@/components/LikeButton';
 
 type SearchContentProps = {
   songs: Song[];
@@ -35,6 +36,8 @@ function SearchContent({ songs }: SearchContentProps) {
           <div className="flex-1 w-full">
             <SearchSongCard song={song} />
           </div>
+
+          <LikeButton songId={song.id} />
         </div>
       ))}
     </div>
