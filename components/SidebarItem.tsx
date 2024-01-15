@@ -8,11 +8,12 @@ type SidebarItemProps = {
   icon: IconType;
   label: string;
   active?: boolean;
-  href: string
+  href: string;
+  sidebarIsOpen: boolean;
 };
 
 function SidebarItem({
-  icon: Icon, label, active = false, href,
+  icon: Icon, label, active = false, href, sidebarIsOpen,
 }: SidebarItemProps) {
   return (
     <Link
@@ -20,10 +21,10 @@ function SidebarItem({
       className={twMerge(`
       flex
       flex-row
+      h-[40px]
       items-center
       justify-center
-      h-[40px]
-      w-full
+      ${sidebarIsOpen ? 'w-full' : 'w-[40px]'}
       gap-x-4
       text-md
       font-semibold
@@ -31,13 +32,14 @@ function SidebarItem({
       hover:text-white
       transition
       text-neutral-400
-      py-1
       `, active && 'text-white')}
     >
-      <Icon size={26} />
+      <Icon size={sidebarIsOpen ? 26 : 32} />
+      {sidebarIsOpen && (
       <p className="truncate w-full">
         {label}
       </p>
+      )}
     </Link>
   );
 }

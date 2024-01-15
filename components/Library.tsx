@@ -7,8 +7,18 @@ import toast from 'react-hot-toast';
 import useAuthModal from '@/hooks/useAuthModal';
 import useUploadModal from '@/hooks/useUploadModal';
 import { useUser } from '@/hooks/useUser';
+import PlaylistCard from './PlaylistCard';
 
-function Library() {
+type LibraryProps = {
+  likedSongsLength: number;
+  songsSentLength: number;
+  onToggleSidebar: () => void;
+  sidebarIsOpen: boolean;
+};
+
+function Library({
+  likedSongsLength, songsSentLength, onToggleSidebar, sidebarIsOpen,
+}: LibraryProps) {
   const authModal = useAuthModal();
   const uploadModal = useUploadModal();
   const { user } = useUser();
@@ -36,6 +46,10 @@ function Library() {
         "
       >
         <div
+          role="button"
+          onClick={onToggleSidebar}
+          onKeyDown={() => {}}
+          tabIndex={0}
           className="
           inline-flex
           items-center
@@ -43,7 +57,7 @@ function Library() {
           "
         >
           <TbPlaylist
-            size={26}
+            size={sidebarIsOpen ? 26 : 32}
             className="
             text-neutral-400
             hover:text-white
@@ -52,43 +66,60 @@ function Library() {
             "
           />
 
+          {sidebarIsOpen
+          && (
           <p
             className="
             text-neutral-400
-            hover:text-white
             font-semibold
             text-md
-            cursor-pointer
+            hover:text-white
             transition
+            cursor-pointer
             "
           >
             Your Library
           </p>
+          )}
         </div>
 
-        <AiOutlinePlus
-          onClick={onClick}
-          size={20}
-          className="
-          text-neutral-400
-          cursor-pointer
-          hover:text-white
-          transition
-          "
-        />
+        {sidebarIsOpen && (
+          <AiOutlinePlus
+            onClick={onClick}
+            size={20}
+            className="
+            text-neutral-400
+            cursor-pointer
+            hover:text-white
+            transition
+            "
+          />
+        )}
       </div>
 
       <div
-        className="
+        className={`
         flex
         flex-col
         gap-y-2
+        ${sidebarIsOpen && 'px-4'}
         mt-4
-        px-4
-        "
-      >
-        List of Songs!
-      </div>
+        `}
+      />
+
+      <PlaylistCard
+        name="Liked Songs"
+        imageUrl="/images/liked.png"
+        href="/liked"
+        likedSongsLength={likedSongsLength}
+      />
+
+      <PlaylistCard
+        name="Songs Sent"
+        imageUrl="/images/upload.png"
+        href="sent"
+        songsSentLength={songsSentLength}
+      />
     </div>
   );
 }

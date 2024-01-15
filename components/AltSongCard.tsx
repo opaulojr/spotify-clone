@@ -7,9 +7,10 @@ import useLoadImage from '@/hooks/useLoadImage';
 
 type AltSongCardProps = {
   song: Song;
+  sidebarIsOpen?: boolean;
 };
 
-function AltSongCard({ song }: AltSongCardProps) {
+function AltSongCard({ song, sidebarIsOpen = true }: AltSongCardProps) {
   const imageUrl = useLoadImage(song);
 
   return (
@@ -47,22 +48,23 @@ function AltSongCard({ song }: AltSongCardProps) {
         />
       </div>
 
-      <div
-        className="
-        flex
-        flex-col
-        gap-y-1
-        overflow-hidden
-        "
-      >
-        <p className="text-white truncate">
-          {song.title}
-        </p>
-
-        <p className="text-neutral-400 text-sm truncate">
-          {song.author}
-        </p>
-      </div>
+      {sidebarIsOpen && (
+        <div
+          className="
+          flex
+          flex-col
+          gap-y-1
+          overflow-hidden
+          "
+        >
+          <p className="text-white truncate">
+            {song.title}
+          </p>
+          <p className="text-neutral-400 text-sm truncate">
+            {song.author}
+          </p>
+        </div>
+      )}
     </div>
   );
 }

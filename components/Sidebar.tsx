@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { HiHome } from 'react-icons/hi';
 import { BiSearch } from 'react-icons/bi';
@@ -11,17 +11,22 @@ import SidebarItem from './SidebarItem';
 import Library from './Library';
 
 type SidebarProps = {
+  likedSongsLength: number;
+  songsSentLength: number;
   children: React.ReactNode;
 };
 
-function Sidebar({ children }: SidebarProps) {
+function Sidebar({ children, likedSongsLength, songsSentLength }: SidebarProps) {
   const pathname = usePathname();
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
+
+  const toggleSidebar = () => setSidebarIsOpen(!sidebarIsOpen);
 
   const routes = useMemo(() => [
     {
       icon: HiHome,
       label: 'Home',
-      active: pathname !== '/search',
+      active: pathname === '/',
       href: '/',
     },
     {
@@ -35,25 +40,25 @@ function Sidebar({ children }: SidebarProps) {
   return (
     <div className="flex h-full">
       <div
-        className="
+        className={`
         hidden
         md:flex
         flex-col
         gap-y-2
         bg-black
         h-full
-        w-[300px]
+        ${sidebarIsOpen ? 'w-[300px]' : 'w-[82px]'}
         p-2
-        "
+        `}
       >
         <SidebarBox
-          className="
+          className={`
           flex
           flex-col
           gap-y-4
-          px-5
+          ${sidebarIsOpen && 'px-5'}
           py-4
-          "
+          `}
         >
           {routes.map((item) => (
             <SidebarItem
@@ -62,12 +67,18 @@ function Sidebar({ children }: SidebarProps) {
               label={item.label}
               active={item.active}
               href={item.href}
+              sidebarIsOpen={sidebarIsOpen}
             />
           ))}
         </SidebarBox>
 
         <SidebarBox className="overflow-y-auto h-full">
-          <Library />
+          <Library
+            likedSongsLength={likedSongsLength}
+            songsSentLength={songsSentLength}
+            onToggleSidebar={toggleSidebar}
+            sidebarIsOpen={sidebarIsOpen}
+          />
         </SidebarBox>
       </div>
 
