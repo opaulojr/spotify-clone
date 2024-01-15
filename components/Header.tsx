@@ -7,10 +7,11 @@ import { HiHome } from 'react-icons/hi';
 import { BiSearch } from 'react-icons/bi';
 import { FaUserAlt } from 'react-icons/fa';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import { useUser } from '@/hooks/useUser';
 import toast from 'react-hot-toast';
 
 import useAuthModal from '@/hooks/useAuthModal';
+import { useUser } from '@/hooks/useUser';
+import usePlayer from '@/hooks/usePlayer';
 import Button from './Button';
 
 type HeaderProps = {
@@ -23,10 +24,12 @@ function Header({ children, className = '' }: HeaderProps) {
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
   const { user } = useUser();
+  const player = usePlayer();
 
   const handleLogout = async () => {
     const { error } = await supabaseClient.auth.signOut();
-    // Reset music player
+
+    player.reset();
     router.refresh();
 
     if (error) {

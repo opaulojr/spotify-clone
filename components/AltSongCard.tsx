@@ -7,15 +7,21 @@ import useLoadImage from '@/hooks/useLoadImage';
 
 type AltSongCardProps = {
   song: Song;
+  onClick?: (id: string) => void;
   sidebarIsOpen?: boolean;
 };
 
-function AltSongCard({ song, sidebarIsOpen = true }: AltSongCardProps) {
+function AltSongCard({ song, onClick, sidebarIsOpen = true }: AltSongCardProps) {
   const imageUrl = useLoadImage(song);
+
+  const handleClick = () => {
+    if (song && onClick) return onClick(song.id);
+    return null;
+  };
 
   return (
     <div
-      onClick={() => {}}
+      onClick={handleClick}
       onKeyDown={() => {}}
       tabIndex={0}
       role="button"

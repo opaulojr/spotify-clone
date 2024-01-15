@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { Song } from '@/types';
 import { useUser } from '@/hooks/useUser';
 import useAuthModal from '@/hooks/useAuthModal';
+import useOnPlay from '@/hooks/useOnPlay';
 import AltSongCard from '@/components/AltSongCard';
 import LikeButton from '@/components/LikeButton';
 
@@ -18,6 +19,7 @@ function SentContent({ songs }: SentContentProps) {
   const router = useRouter();
   const { isLoading, user } = useUser();
   const authModal = useAuthModal();
+  const onPlay = useOnPlay(songs);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -57,7 +59,10 @@ function SentContent({ songs }: SentContentProps) {
           className="flex items-center gap-x-4 w-full"
         >
           <div className="flex-1">
-            <AltSongCard song={song} />
+            <AltSongCard
+              song={song}
+              onClick={(id: string) => onPlay(id)}
+            />
           </div>
 
           <LikeButton songId={song.id} />

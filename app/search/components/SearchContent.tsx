@@ -1,6 +1,7 @@
 'use client';
 
 import { Song } from '@/types';
+import useOnPlay from '@/hooks/useOnPlay';
 import LikeButton from '@/components/LikeButton';
 import AltSongCard from '@/components/AltSongCard';
 
@@ -9,6 +10,8 @@ type SearchContentProps = {
 };
 
 function SearchContent({ songs }: SearchContentProps) {
+  const onPlay = useOnPlay(songs);
+
   if (songs.length === 0) {
     return (
       <div
@@ -34,7 +37,10 @@ function SearchContent({ songs }: SearchContentProps) {
           className="flex items-center gap-x-4 w-full"
         >
           <div className="flex-1 w-full">
-            <AltSongCard song={song} />
+            <AltSongCard
+              song={song}
+              onClick={(id: string) => onPlay(id)}
+            />
           </div>
 
           <LikeButton songId={song.id} />

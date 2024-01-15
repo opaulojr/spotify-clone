@@ -1,6 +1,7 @@
 'use client';
 
 import { Song } from '@/types';
+import useOnPlay from '@/hooks/useOnPlay';
 import SongCard from '@/components/SongCard';
 
 type PageContentProps = {
@@ -8,6 +9,8 @@ type PageContentProps = {
 };
 
 function PageContent({ songs }: PageContentProps) {
+  const onPlay = useOnPlay(songs);
+
   return (
     <div
       className="
@@ -25,7 +28,7 @@ function PageContent({ songs }: PageContentProps) {
       {songs.map((song) => (
         <SongCard
           key={song.id}
-          onClick={() => {}}
+          onClick={onPlay}
           data={song}
         />
       ))}
