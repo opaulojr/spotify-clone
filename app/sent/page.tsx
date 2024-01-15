@@ -1,10 +1,14 @@
 import Image from 'next/image';
 
 import Header from '@/components/Header';
+import getSongsByUserId from '@/actions/getSongsByUserId';
+import SentContent from './components/SentContent';
 
 export const revalidate = 0;
 
-export default async function Uploaded() {
+export default async function Sent() {
+  const songsSent = await getSongsByUserId();
+
   return (
     <div
       className="
@@ -80,7 +84,7 @@ export default async function Uploaded() {
         </div>
       </Header>
 
-      Uploaded content
+      <SentContent songs={songsSent} />
     </div>
   );
 }
