@@ -122,6 +122,12 @@ function PlayerContent({ song, songUrl }: PlayerContentProps) {
     }
   };
 
+  const onSeek = (newCurrentTime: number) => {
+    setCurrentTime(newCurrentTime);
+
+    sound?.seek(newCurrentTime);
+  };
+
   return (
     <div
       className="
@@ -233,7 +239,11 @@ function PlayerContent({ song, songUrl }: PlayerContentProps) {
           />
         </div>
 
-        <SongTimestamp currentTime={currentTime} duration={duration} />
+        <SongTimestamp
+          currentTime={currentTime}
+          duration={duration}
+          onSeek={onSeek}
+        />
       </div>
 
       <div className="hidden md:flex w-full justify-end pr-2">

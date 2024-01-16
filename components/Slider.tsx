@@ -36,7 +36,7 @@ function Slider({ value = 1, onChange }: SliderProps) {
         relative
         grow
         rounded-full
-        h-[3px]
+        h-1
         "
       >
         <RadixSlider.Range
