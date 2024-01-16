@@ -3,7 +3,7 @@
 import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
 import { AiFillStepBackward, AiFillStepForward } from 'react-icons/ai';
 import { HiSpeakerWave, HiSpeakerXMark } from 'react-icons/hi2';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // @ts-ignore
 import useSound from 'use-sound';
@@ -13,6 +13,7 @@ import usePlayer from '@/hooks/usePlayer';
 import LikeButton from './LikeButton';
 import Slider from './Slider';
 import AltSongCard from './AltSongCard';
+import SongTimestamp from './SongTimestamp';
 
 type PlayerContentProps = {
   song: Song;
@@ -22,7 +23,10 @@ type PlayerContentProps = {
 function PlayerContent({ song, songUrl }: PlayerContentProps) {
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const isPlayingRef = useRef(false);
 
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
   const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
@@ -63,20 +67,41 @@ function PlayerContent({ song, songUrl }: PlayerContentProps) {
     songUrl,
     {
       volume,
-      onplay: () => setIsPlaying(true),
-      onend: () => {
+      onplay: () => {
+        isPlayingRef.current = true;
+        setIsPlaying(true);
+      },
+      onpause: () => {
+        isPlayingRef.current = false;
         setIsPlaying(false);
+      },
+      onend: () => {
+        isPlayingRef.current = false;
+        setIsPlaying(false);
+        setCurrentTime(0);
         onPlayNext();
       },
-      onpause: () => setIsPlaying(false),
       format: ['mp3'],
     },
   );
 
   useEffect(() => {
+    if (sound) {
+      const { _duration: songDuration } = sound;
+      setDuration(songDuration);
+    }
+
+    const getSongTimestamp = setInterval(() => {
+      if (sound && isPlayingRef.current) {
+        const timestamp = sound?.seek();
+        setCurrentTime(timestamp);
+      }
+    }, 500);
+
     sound?.play();
 
     return () => {
+      clearInterval(getSongTimestamp);
       sound?.unload();
     };
   }, [sound]);
@@ -146,56 +171,69 @@ function PlayerContent({ song, songUrl }: PlayerContentProps) {
 
       <div
         className="
-        hidden
-        md:flex
-        justify-center
-        items-center
-        w-full
-        h-full
-        max-w-[722px]
-        gap-x-6
-        "
-      >
-        <AiFillStepBackward
-          onClick={onPlayPrevious}
-          className="
-          text-neutral-400
-          cursor-pointer
-          hover:text-white
-          transition
+          hidden
+          md:flex
+          md:flex-col
+          justify-center
+          items-center
+          w-full
+          h-full
+          max-w-[722px]
           "
-          size={30}
-        />
+      >
         <div
-          role="button"
-          onClick={handlePlay}
-          onKeyDown={() => {}}
-          aria-label="Play"
-          tabIndex={0}
           className="
           flex
-          items-center
           justify-center
-          w-10
-          h-10
-          rounded-full
-          bg-white
-          p-1
-          cursor-pointer
+          items-center
+          w-full
+          h-full
+          gap-x-6
           "
         >
-          <Icon className="text-black" size={30} />
+          <AiFillStepBackward
+            onClick={onPlayPrevious}
+            className="
+            text-neutral-400
+            cursor-pointer
+            hover:text-white
+            transition
+            "
+            size={30}
+          />
+          <div
+            role="button"
+            onClick={handlePlay}
+            onKeyDown={() => {}}
+            aria-label="Play"
+            tabIndex={0}
+            className="
+            flex
+            items-center
+            justify-center
+            w-10
+            h-10
+            rounded-full
+            bg-white
+            p-1
+            cursor-pointer
+            "
+          >
+            <Icon className="text-black" size={30} />
+          </div>
+          <AiFillStepForward
+            onClick={onPlayNext}
+            className="
+            text-neutral-400
+            cursor-pointer
+            hover:text-white
+            transition
+            "
+            size={30}
+          />
         </div>
-        <AiFillStepForward
-          onClick={onPlayNext}
-          className="
-          text-neutral-400
-          cursor-pointer
-          hover:text-white
-          transition
-          "
-          size={30}
-        />
+
+        <SongTimestamp currentTime={currentTime} duration={duration} />
       </div>
 
       <div className="hidden md:flex w-full justify-end pr-2">
