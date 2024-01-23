@@ -9,6 +9,25 @@ export type Song = {
   image_path: string;
 };
 
+export type SongAPI = {
+  trackId: number;
+  artistName: string;
+  trackName: string;
+  collectionName: string
+  artworkUrl100: string;
+};
+
+export type AlbumAPI = {
+  artistId: number;
+  artistName: string;
+  collectionId: number;
+  collectionName: string;
+  collectionPrice: number;
+  artworkUrl100: string;
+  releaseDate: string;
+  trackCount: number;
+};
+
 export type UserDetails = {
   id: string;
   first_name: string;

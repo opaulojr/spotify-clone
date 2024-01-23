@@ -1,12 +1,15 @@
 import getSongs from '@/actions/getSongs';
+import getItunesSongs from '@/actions/getSongsItunes';
 import Header from '@/components/Header';
 import ListButton from '@/components/ListButton';
 import PageContent from './components/PageContent';
+import PageContentAPI from './components/PageContentAPI';
 
 export const revalidate = 0;
 
 export default async function Home() {
   const songs = await getSongs();
+  const songsAPI = await getItunesSongs();
 
   return (
     <div
@@ -58,6 +61,16 @@ export default async function Home() {
 
         <div>
           <PageContent songs={songs} />
+        </div>
+      </div>
+
+      <div className="mt-2 mb-7 px-6">
+        <h1 className="text-white text-2xl font-semibold">
+          Made for you
+        </h1>
+
+        <div>
+          <PageContentAPI songsAPI={songsAPI} />
         </div>
       </div>
     </div>

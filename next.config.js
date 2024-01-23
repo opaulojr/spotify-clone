@@ -2,11 +2,17 @@
 
 const nextConfig = {
   images: {
-    remotePatterns: [{
-      protocol: 'https',
-      hostname: 'xxaxasgcrozwyejsqqyc.supabase.co',
-    }]
-  }
-}
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'xxaxasgcrozwyejsqqyc.supabase.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'is1-ssl.mzstatic.com',
+      },
+    ],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
