@@ -167,7 +167,6 @@ function PlayerContent({ song, songUrl }: PlayerContentProps) {
           justify-center
           rounded-full
           bg-white
-          p-1
           cursor-pointer
           "
         >
@@ -203,10 +202,12 @@ function PlayerContent({ song, songUrl }: PlayerContentProps) {
             text-neutral-400
             cursor-pointer
             hover:text-white
+            hover:scale-110
             transition
             "
             size={30}
           />
+
           <div
             role="button"
             onClick={handlePlay}
@@ -223,16 +224,19 @@ function PlayerContent({ song, songUrl }: PlayerContentProps) {
             bg-white
             p-1
             cursor-pointer
+            hover:scale-110
             "
           >
             <Icon className="text-black" size={30} />
           </div>
+
           <AiFillStepForward
             onClick={onPlayNext}
             className="
             text-neutral-400
             cursor-pointer
             hover:text-white
+            hover:scale-110
             transition
             "
             size={30}

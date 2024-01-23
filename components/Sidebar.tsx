@@ -2,10 +2,11 @@
 
 import { usePathname } from 'next/navigation';
 import { useMemo, useState } from 'react';
-
+import { twMerge } from 'tailwind-merge';
 import { HiHome } from 'react-icons/hi';
 import { BiSearch } from 'react-icons/bi';
 
+import usePlayer from '@/hooks/usePlayer';
 import SidebarBox from './SidebarBox';
 import SidebarItem from './SidebarItem';
 import Library from './Library';
@@ -19,6 +20,7 @@ type SidebarProps = {
 function Sidebar({ children, likedSongsLength, songsSentLength }: SidebarProps) {
   const pathname = usePathname();
   const [sidebarIsOpen, setSidebarIsOpen] = useState(true);
+  const player = usePlayer();
 
   const toggleSidebar = () => setSidebarIsOpen(!sidebarIsOpen);
 
@@ -38,7 +40,11 @@ function Sidebar({ children, likedSongsLength, songsSentLength }: SidebarProps) 
   ], [pathname]);
 
   return (
-    <div className="flex h-full">
+    <div className={twMerge(`
+    flex
+    h-full
+    `, player.activeId && 'h-[calc(100%-80px)]')}
+    >
       <div
         className={`
         hidden
